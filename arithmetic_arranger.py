@@ -1,3 +1,11 @@
+'''
+@File    :   arithmetic_arranger.py
+@Time    :   2021/11/113 18:38:01
+@Author  :   JJwizardMP
+@Version :   1.0.1
+@License :   GLP 2
+@Desc    :   Solution to FCC Python Project: Arithmetic Formatter
+'''
 def arithmetic_arranger(*problems):
   OF = arithForm(problems[0])
   flag = True if (len(problems)>1) else False
