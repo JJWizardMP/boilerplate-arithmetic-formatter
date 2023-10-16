@@ -9,10 +9,7 @@
 
 
 def arithmetic_arranger(*problems):
-  OF = arithForm(problems[0])
-  flag = len(problems) > 1
-  arranged_problems = OF.build_operation(flag)
-  return arranged_problems
+  return arithForm(problems[0]).build_operation(len(problems) > 1)
 
 
 class operFormat:
@@ -35,7 +32,6 @@ class arithForm:
         4: "Error: Numbers cannot be more than four digits."
     }
     self.problems = problems.copy()
-    self.list_format = []
 
   def build_operation(self, flag=False):
     try:
@@ -57,15 +53,10 @@ class arithForm:
         raise ValueError(self.dict_err[4])
 
   def create_output(self, flag=False):
-    m1, m2, dash, rs, sep = ("", "", "", "\n", " " * 4)
-    self.list_format = [operFormat(problem) for problem in self.problems]
-    for obj in self.list_format:
-      m1 += f'{obj.a:>{obj.lmax + 2}}{sep}'
-      m2 += f'{obj.s:<2}{obj.b:>{obj.lmax}}{sep}'
-      dash += f"{'-' * (obj.lmax + 2)}{sep}"
-      if (flag):
-        rs += f'{obj.res:>{obj.lmax + 2}}{sep}'
-    # Elimnate white spaces to right side
-    m1, m2, dash, rs = [s.rstrip() for s in (m1, m2, dash, rs)]
-    arith_format = f"{m1}\n{m2}\n{dash}{rs}"
-    return arith_format
+    list_format = [operFormat(problem) for problem in self.problems]
+    m1 = [f'{obj.a:>{obj.lmax + 2}}' for obj in list_format]
+    m2 = [f'{obj.s:<2}{obj.b:>{obj.lmax}}' for obj in list_format]
+    dash = ['-' * (obj.lmax + 2) for obj in list_format]
+    rs = [f'{obj.res:>{obj.lmax + 2}}' for obj in list_format] if flag else []
+    arith_format = '\n'.join(map((' ' * 4).join, (m1, m2, dash, rs)))
+    return arith_format.rstrip()
